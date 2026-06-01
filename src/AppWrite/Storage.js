@@ -1,0 +1,53 @@
+import config from "../config/config";
+import { Client,Storage, ID } from "appwrite";
+
+export class storageService {
+
+    client;
+    bucket;
+
+    constructor() {
+        this.client = new Client()
+            .setEndpoint("https://fra.cloud.appwrite.io/v1")
+            .setProject('6a1a6b0a002be50e5192');
+        this.bucket = new Storage(this.client)
+    }
+
+    async uploadFile(file) {
+        try {
+            return await this.bucket.createFile(
+                config.AppWriteBucketId,
+                ID.unique(),
+                file
+            )
+        } catch (error) {
+            console.log("Appwrite service :: uploadFile :: error", error);
+
+        }
+    }
+
+    async deleteFile(fileId) {
+        try {
+            await this.bucket.deleteFile(
+                conf.appwriteBucketId,
+                fileId
+            )
+            return true
+        } catch (error) {
+            console.log("Appwrite serive :: deleteFile :: error", error);
+            return false
+        }
+
+    }
+
+    getFilePreview(fileId){
+        return this.bucket.getFilePreview(
+            config.AppWriteBucketId,
+            fileId
+        )
+    }
+
+}
+
+const storage = new storageService();
+export default storage
