@@ -27,7 +27,7 @@ function Login() {
       setError(error.message);
     }
   };
-}
+
 
 return (
   <div className="flex items-center justify-center w-full">
@@ -86,5 +86,6 @@ return (
     </form>
   </div>
 );
+}
 
 export default Login;
