@@ -9,6 +9,8 @@ import Input from "./Input";
 import RTE from "./RTE"
 import login  from "../Storage/AuthSlice";   
 import Signup from "./Signup"
+import postCard from "./postCard"
+import PostForm from "./postForm/postForm";
 export {
     Header,
     Footer,
@@ -19,6 +21,8 @@ export {
     Input,
     RTE,
     login,
-    Signup
+    Signup,
+    postCard,
+
 
 }
