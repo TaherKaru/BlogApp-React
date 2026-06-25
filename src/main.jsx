@@ -10,6 +10,9 @@ import AddPost from "./Pages/AddPost.jsx";
 import EditPost from "./Pages/EditPost.jsx";
 import Post from "./Pages/Post.jsx";
 import Signup from "./Pages/Signup.jsx";
+import { createBrowserRouter } from "react-router-dom";
+import AuthLayout from "./components/AuthLayout.jsx";
+import Login from "./Storage/AuthSlice.js";
 
 const router = createBrowserRouter([
   {

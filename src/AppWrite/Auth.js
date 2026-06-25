@@ -58,7 +58,7 @@ export class Authenticate {
 
     async passwordRecovery({ email }) {
         try {
-            const userRecovery = await this.account.createRecovery(email, config.AppWriteRecoveryAccountUrl)
+            const userRecovery = await this.account.createRecovery(email, config.AppWriteRecoveryUrl)
             return userRecovery;
         } catch (error) {
             console.log("appwrite service :: error :: Password Recovery", error);

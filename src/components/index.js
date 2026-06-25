@@ -11,6 +11,7 @@ import login  from "../Storage/AuthSlice";
 import Signup from "./Signup"
 import postCard from "./postCard"
 import PostForm from "./postForm/postForm";
+import Select from './Select'
 export {
     Header,
     Footer,
@@ -20,9 +21,12 @@ export {
     Button,
     Input,
     RTE,
+    Select,
     login,
     Signup,
     postCard,
+    PostForm
+    
 
 
 }

@@ -1,4 +1,5 @@
 import config from "../config/config";
+
 import { Client,Storage, ID } from "appwrite";
 
 export class storageService {
@@ -8,8 +9,8 @@ export class storageService {
 
     constructor() {
         this.client = new Client()
-            .setEndpoint("https://fra.cloud.appwrite.io/v1")
-            .setProject('6a1a6b0a002be50e5192');
+            .setEndpoint(config.AppWriteUrl)
+            .setProject(config.AppWriteProjectId);
         this.bucket = new Storage(this.client)
     }
 
@@ -29,7 +30,7 @@ export class storageService {
     async deleteFile(fileId) {
         try {
             await this.bucket.deleteFile(
-                conf.appwriteBucketId,
+                config.AppWriteBucketId,
                 fileId
             )
             return true
