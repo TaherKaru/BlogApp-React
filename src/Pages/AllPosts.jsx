@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Service from "../AppWrite/Database";
 import Container from '../components/Container/Container'
-import postCard from '../components/index'
+import PostCard from '../components/postCard'
 
 
 function AllPosts() {
@@ -25,7 +25,7 @@ function AllPosts() {
         <div className='flex flex-wrap'>
             {posts.map((postdata) => (
                 <div key={post.$id} className='p-2 w-1/4'>
-                    <postCard {...postdata} />
+                    <PostCard {...postdata} />
                 </div>
             ))}
         </div>

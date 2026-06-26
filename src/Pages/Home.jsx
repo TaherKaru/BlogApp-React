@@ -1,10 +1,10 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import Service from "../AppWrite/Database";
-import { Container, postCard } from "../components";
+import { Container, PostCard } from "../components/index";
 
 function Home() {
-  const [posts, setPosts] = useState();
+  const [posts, setPosts] = useState([]);
   useEffect(() => {
     Service.getPosts()
       .then((posts) => {

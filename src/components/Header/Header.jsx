@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 function Header() {
   const authStatus = useSelector((state) => state.auth.status);
+  const navigate = useNavigate();
 
   const navItems = [
     {
@@ -46,7 +47,7 @@ function Header() {
           </div>
           <ul className="flex ml-auto">
             {navItems.map((item) =>
-              item.active ? (
+              item.isActive ? (
                 <li key={item.name}>
                   <button
                     onClick={() => navigate(item.path )}

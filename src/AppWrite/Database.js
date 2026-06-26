@@ -21,7 +21,7 @@ export class service {
                 slug,
                 {
                     title,
-                    featureimage,
+                    featuredimage,
                     content,
                     status,
                     userId
@@ -69,10 +69,10 @@ export class service {
 
     async getPosts(queries = Query.equal('status', 'active')) {
         try {
-            return await this.database.getDocuments(
+            return await this.database.listDocuments(
                 config.AppWriteDatabaseId,
                 config.AppWriteCollectionId,
-                queries
+                [queries]
             )
         } catch (error) {
             console.log("Appwrite service :: error :: getPosts", error)

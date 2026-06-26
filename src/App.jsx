@@ -4,6 +4,7 @@ import { login, logout } from "./Storage/AuthSlice";
 import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import service from "./AppWrite/Auth";
+import { Outlet } from "react-router-dom";
 
 
 
@@ -21,7 +22,7 @@ function App() {
           dispatch(logout());
         }
       })
-      .finally(setloading(false));
+      .finally(() => setloading(false));
   }, []);
 
   return !loading ? (
@@ -29,7 +30,7 @@ function App() {
       <div className="w-full block">
         <Header />
         <main>
-          {/* outlet */}
+          <Outlet/> 
         </main>
         <Footer />
       </div>
