@@ -17,11 +17,14 @@ function Signup() {
   const create = async (data) => {
     setError("");
     try {
-      const userData = await service.signUp(data);
-      if (userData) {
-        const session = await dispatch(authLogin(userData));
-        if (session) {
-          navigate("/");
+      const userSession = await service.signUp(data);
+      if (userSession) {
+        const currentUser = await service.getCurrentUser();
+        if (currentUser) {
+          const session = await dispatch(authLogin(currentUser));
+          if (session) {
+            navigate("/");
+          }
         }
       }
     } catch (error) {

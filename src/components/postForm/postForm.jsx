@@ -21,29 +21,41 @@ function PostForm({ post }) {
   const userData = useSelector((state) => state.auth.userData);
 
   const submit = async (data) => {
-    const file = data.image?.[0] ? await storage.uploadFile(data.image[0]) : null;
-    const payload = {
-      title: data.title,
-      slug: data.slug,
-      content: data.content,
-      status: data.status,
-      featuredImage: file ? file.$id : post?.featuredImage,
-    };
+    console.log("Submit function called", data, userData);
 
-    if (post) {
-      const dbpost = await Service.updatePost(post.$id, payload);
-      if (dbpost) {
-        navigate(`/post/${dbpost.$id}`);
-      }
-    } else {
-      const dbPost = await Service.createPost({
-        ...payload,
-        userId: userData.$id,
-      });
+    if (!post && !userData?.$id) {
+      console.error("Cannot create post: missing authenticated user data.");
+      return;
+    }
 
-      if (dbPost) {
-        navigate(`/post/${dbPost.$id}`);
+    try {
+      const file = data.image?.[0] ? await storage.uploadFile(data.image[0]) : null;
+      const payload = {
+        title: data.title,
+        slug: data.slug,
+        content: data.content,
+        status: data.status,
+        featuredImage: file ? file.$id : post?.featuredImage,
+      };
+
+      if (post) {
+        const dbpost = await Service.updatePost(post.$id, payload);
+        console.log("Updated post result", dbpost);
+        if (dbpost) {
+          navigate(`/post/${dbpost.$id}`);
+        }
+      } else {
+        const dbPost = await Service.createPost({
+          ...payload,
+          userId: userData.$id,
+        });
+        console.log("Created post result", dbPost);
+        if (dbPost) {
+          navigate(`/post/${dbPost.$id}`);
+        }
       }
+    } catch (error) {
+      console.error("Post submit error", error);
     }
   };
 
