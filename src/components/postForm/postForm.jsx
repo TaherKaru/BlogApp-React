@@ -21,33 +21,28 @@ function PostForm({ post }) {
   const userData = useSelector((state) => state.auth.userData);
 
   const submit = async (data) => {
-    const file = data.image[0] ? await storage.uploadFile(data.image[0]) : null;
+    const file = data.image?.[0] ? await storage.uploadFile(data.image[0]) : null;
+    const payload = {
+      title: data.title,
+      slug: data.slug,
+      content: data.content,
+      status: data.status,
+      featuredImage: file ? file.$id : post?.featuredImage,
+    };
 
     if (post) {
-      if (file) {
-        await storage.deleteFile(post.featuredImage);
-      }
-
-      const dbpost = await Service.updatePost(post.$id, {
-        ...data,
-        featuredImage: file ? file.$id : undefined,
-      });
-
+      const dbpost = await Service.updatePost(post.$id, payload);
       if (dbpost) {
         navigate(`/post/${dbpost.$id}`);
       }
     } else {
-      if (file) {
-        data.featuredImage = file.$id;
+      const dbPost = await Service.createPost({
+        ...payload,
+        userId: userData.$id,
+      });
 
-        const dbPost = await Service.createPost({
-          ...data,
-          userId: userData.$id,
-        });
-
-        if (dbPost) {
-          navigate(`/post/${dbPost.$id}`);
-        }
+      if (dbPost) {
+        navigate(`/post/${dbPost.$id}`);
       }
     }
   };

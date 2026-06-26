@@ -1,33 +1,34 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Service from "../AppWrite/Database";
+import storage from "../AppWrite/Storage";
+import { Container, Button } from "../components/index";
+import parse from "html-react-parser";
 
 function Post() {
-  const [posts, setPosts] = useState();
+  const [post, setPost] = useState(null);
   const navigate = useNavigate();
   const { slug } = useParams();
 
-  userData = useSelector((state) => {
-    state.auth.userData;
-  });
+  const userData = useSelector((state) => state.auth.userData);
 
   const isAuthor = post && userData ? post.userId === userData.$id : false;
 
   useEffect(() => {
     if (slug) {
-      Service.getPost(slug).then((post) => {
-        if (post) setPost(post);
+      Service.getPost(slug).then((received) => {
+        if (received) setPost(received);
         else navigate("/");
       });
     } else navigate("/");
   }, [slug, navigate]);
 
   const deletePost = () => {
+    if (!post) return;
     Service.deletePost(post.$id).then((status) => {
       if (status) {
-        appwriteService.deleteFile(post.featuredImage);
+        storage.deleteFile(post.featuredImage);
         navigate("/");
       }
     });
@@ -38,7 +39,7 @@ function Post() {
       <Container>
         <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
           <img
-            src={appwriteService.getFilePreview(post.featuredImage)}
+            src={storage.getFilePreview(post.featuredImage)}
             alt={post.title}
             className="rounded-xl"
           />

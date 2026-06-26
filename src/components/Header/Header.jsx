@@ -16,22 +16,22 @@ function Header() {
     },
     {
       name: "Login",
-      path: "/Login",
+      path: "/login",
       isActive: !authStatus,
     },
     {
       name: "SignUp",
-      path: "/SignUp",
+      path: "/signup",
       isActive: !authStatus,
     },
     {
-      name: "All Post",
-      path: "/All-Post",
+      name: "All Posts",
+      path: "/all-posts",
       isActive: authStatus,
     },
     {
-      name: "add Post",
-      path: "/Add-Post",
+      name: "Add Post",
+      path: "/add-post",
       isActive: authStatus,
     },
   ];

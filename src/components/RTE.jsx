@@ -2,21 +2,18 @@ import React from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Controller } from "react-hook-form";
 
-export default function RTE({ name, control, label }) {
+export default function RTE({ name, control, label, defaultValue = "" }) {
   return (
     <div className="w-full">
       {label && <label className="inline-block mb-1 pl-1">{label}</label>}
-
-      <Controller>
-        name:{name}
-        control:{control}
-        render:
-        {({ field: { onchange } }) => (
-          <Editor>
-            initialValue={defaultValue}
-            init =
-            {{
-              initialValue: defaultValue,
+      <Controller
+        name={name}
+        control={control}
+        defaultValue={defaultValue}
+        render={({ field: { onChange, value } }) => (
+          <Editor
+            value={value}
+            init={{
               height: 500,
               menubar: true,
               plugins: [
@@ -25,7 +22,6 @@ export default function RTE({ name, control, label }) {
                 "autolink",
                 "lists",
                 "link",
-                "image",
                 "charmap",
                 "preview",
                 "anchor",
@@ -36,33 +32,19 @@ export default function RTE({ name, control, label }) {
                 "insertdatetime",
                 "media",
                 "table",
-                "code",
                 "help",
                 "wordcount",
-                "anchor",
               ],
               toolbar: [
-                { name: "history", items: ["undo", "redo"] },
-                { name: "styles", items: ["styles"] },
-                { name: "formatting", items: ["bold", "italic"] },
-                {
-                  name: "alignment",
-                  items: [
-                    "alignleft",
-                    "aligncenter",
-                    "alignright",
-                    "alignjustify",
-                  ],
-                },
-                { name: "indentation", items: ["outdent", "indent"] },
+                "undo redo | formatselect | bold italic backcolor | \\n                alignleft aligncenter alignright alignjustify | \\n                bullist numlist outdent indent | removeformat | help",
               ],
               content_style:
                 "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
             }}
-            onEditorChange={onChange}
-          </Editor>
+            onEditorChange={(content) => onChange(content)}
+          />
         )}
-      </Controller>
+      />
     </div>
   );
 }

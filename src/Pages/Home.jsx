@@ -7,9 +7,9 @@ function Home() {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     Service.getPosts()
-      .then((posts) => {
-        if (posts) {
-          setPosts(posts.documents);
+      .then((result) => {
+        if (result) {
+          setPosts(result.documents || []);
         }
       })
       .catch((error) => {
@@ -37,11 +37,11 @@ function Home() {
     <div className="w-full py-8">
       <Container>
         <div className="flex flex-wrap">
-          {posts.map((posts) => {
+          {posts.map((post) => (
             <div key={post.$id} className="p-2 w-1/4">
-              <postCard {...post} />
-            </div>;
-          })}
+              <PostCard {...post} />
+            </div>
+          ))}
         </div>
       </Container>
     </div>

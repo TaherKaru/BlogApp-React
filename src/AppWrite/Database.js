@@ -13,28 +13,27 @@ export class service {
         this.database = new Databases(this.client)
     }
 
-    async createPost({ title, featuredimage, slug, content, status, userId }) {
+    async createPost({ title, featuredImage, slug, content, status, userId }) {
         try {
-            await this.database.createDocument(
+            return await this.database.createDocument(
                 config.AppWriteDatabaseId,
                 config.AppWriteCollectionId,
                 slug,
                 {
                     title,
-                    featuredimage,
+                    featuredImage,
                     content,
                     status,
-                    userId
+                    userId,
                 }
-            )
-            return true;
+            );
         } catch (error) {
-            console.log("Appwrite service :: error :: create post")
+            console.log("Appwrite service :: error :: create post", error);
             return false;
         }
     }
 
-    async updatePost(slug, { title, featuredimage, content, status }) {
+    async updatePost(slug, { title, featuredImage, content, status }) {
         try {
             return await this.database.updateDocument(
                 config.AppWriteDatabaseId,
@@ -42,7 +41,7 @@ export class service {
                 slug,
                 {
                     title,
-                    featuredimage,
+                    featuredImage,
                     content,
                     status
 
